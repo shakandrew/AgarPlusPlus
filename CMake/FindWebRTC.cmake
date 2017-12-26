@@ -24,11 +24,10 @@
 # unset(WEBRTC_LIBRARIES_RELEASE CACHE)
 
 # Set required variables
-set(WEBRTC_ROOT_DIR "/home/koshachok/ExtraLibraries/WebRTC/" CACHE STRING "Where is the WebRTC root directory located?")
+# set(WEBRTC_ROOT_DIR "" CACHE STRING "Where is the WebRTC root directory located?")
 # set(WEBRTC_BUILD_DIR_SUFFIX_DEBUG "out/Debug" CACHE STRING "What is the WebRTC debug build directory suffix?")
 # set(WEBRTC_BUILD_DIR_SUFFIX_RELEASE "out/Release" CACHE STRING "What is the WebRTC release build directory suffix?")
-include("${CMAKE_CURRENT_SOURCE_DIR}/CMake/CMakeFindExtensions.cmake")
-include("${CMAKE_CURRENT_SOURCE_DIR}/CMake/CMakeHelpers.cmake")
+
 # ----------------------------------------------------------------------
 # Find WEBRTC include path
 # ----------------------------------------------------------------------
@@ -94,7 +93,7 @@ if(WEBRTC_INCLUDE_DIR)
     #unset(WEBRTC_LIBRARY CACHE)
     #unset(WEBRTC_LIBRARIES CACHE)
     #set(WEBRTC_LIBRARIES "")
-    
+
     if(MSVC)
       set(lib_suffix "lib")
     else()
@@ -156,7 +155,7 @@ if(WEBRTC_INCLUDE_DIR)
 
     # For ABI compatability between precompiled WebRTC libraries using clang and new GCC versions
     add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
-    set(WEBRTC_DEPENDENCIES -lrt -lX11 -lGLU -ldl) # -lGL
+    #set(WEBRTC_DEPENDENCIES -lrt -lX11 -lGLU) # -lGL
 
     # Enable libstdc++ debugging if you build WebRTC with `enable_iterator_debugging=true`
     # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_GLIBCXX_DEBUG=1")

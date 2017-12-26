@@ -7,13 +7,13 @@
 ##############
 
 # Boost version
-VERSION="1_65_1"
+VERSION="1_66_0"
 
 # In this folder there will be folders include, lib, src and boost archive
 DESTINATION=ExternalLibs/boost_$VERSION
 
 # Comment next line to install everything
-LIBS="program_options"
+LIBS="system program_options"
 
 ##########################
 # Implementation
@@ -34,4 +34,6 @@ mv boost_$VERSION src && \
 cd src && \
 mkdir build && \
 ./bootstrap.sh && \
-./b2 --prefix=.. --build-dir=build --layout=tagged $WITH threading=multi install
+./b2 --prefix=.. --build-dir=build --layout=tagged $WITH threading=multi install && \
+cd .. 
+rm -rf src/ boost_$VERSION.tar.gz

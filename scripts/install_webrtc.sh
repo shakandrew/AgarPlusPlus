@@ -23,4 +23,5 @@ mkdir -p $DESTINATION && \
 cd $DESTINATION && \
 rm -rf * && \
 wget -O $PACKAGE.tar.gz https://github.com/sourcey/webrtc-precompiled-builds/blob/master/$PACKAGE.tar.gz?raw=true
-tar -xvzf $PACKAGE.tar.gz
+tar -xvzf $PACKAGE.tar.gz && \
+rm -rf $PACKAGE.tar.gz
