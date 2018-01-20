@@ -8,21 +8,21 @@ macro(find_library_extended prefix)
   include(CMakeParseArguments REQUIRED)
   # cmake_parse_arguments(prefix options singleValueArgs multiValueArgs ${ARGN})
   cmake_parse_arguments(${prefix} "" ""
-    "NAMES;NAMES_DEBUG;NAMES_RELEASE;PATHS_DEBUG;PATHS_RELEASE;PATHS"
-    ${ARGN}
-    )
+          "NAMES;NAMES_DEBUG;NAMES_RELEASE;PATHS_DEBUG;PATHS_RELEASE;PATHS"
+          ${ARGN}
+          )
 
   # Reloading to ensure build always passes and picks up changes
   # This is more expensive but proves useful for fragmented libraries like WebRTC
   unset(${prefix}_LIBRARY_DEBUG CACHE)
   find_library(${prefix}_LIBRARY_DEBUG
-    NAMES
-      ${${prefix}_NAMES_DEBUG}
-      ${${prefix}_NAMES}
-    PATHS
-      ${${prefix}_PATHS_DEBUG}
-      ${${prefix}_PATHS}
-    )
+          NAMES
+          ${${prefix}_NAMES_DEBUG}
+          ${${prefix}_NAMES}
+          PATHS
+          ${${prefix}_PATHS_DEBUG}
+          ${${prefix}_PATHS}
+          )
 
   #if(NOT ${prefix}_PATHS_RELEASE)
   #  list(APPEND ${prefix}_PATHS_RELEASE ${${prefix}_PATHS})
@@ -30,13 +30,13 @@ macro(find_library_extended prefix)
 
   unset(${prefix}_LIBRARY_RELEASE CACHE)
   find_library(${prefix}_LIBRARY_RELEASE
-    NAMES
-      ${${prefix}_NAMES_RELEASE}
-      ${${prefix}_NAMES}
-    PATHS
-      ${${prefix}_PATHS_RELEASE}
-      ${${prefix}_PATHS}
-    )
+          NAMES
+          ${${prefix}_NAMES_RELEASE}
+          ${${prefix}_NAMES}
+          PATHS
+          ${${prefix}_PATHS_RELEASE}
+          ${${prefix}_PATHS}
+          )
 
   if(${prefix}_LIBRARY_DEBUG OR ${prefix}_PATHS_RELEASE)
     include(${CMAKE_ROOT}/Modules/SelectLibraryConfigurations.cmake)
@@ -123,10 +123,10 @@ macro(set_module_found module)
   endif()
 
   mark_as_advanced(${module}_INCLUDE_DIRS
-                   ${module}_LIBRARY_DIRS
-                   ${module}_LIBRARIES
-                   ${module}_DEFINITIONS
-                   ${module}_FOUND)
+          ${module}_LIBRARY_DIRS
+          ${module}_LIBRARIES
+          ${module}_DEFINITIONS
+          ${module}_FOUND)
 endmacro()
 
 
@@ -169,7 +169,7 @@ macro(set_component_found module component)
 
     # Only mark as advanced when found
     mark_as_advanced(${ALIAS_INCLUDE_DIRS}
-                     ${ALIAS_LIBRARY_DIRS})
+            ${ALIAS_LIBRARY_DIRS})
 
   else()
     # NOTE: an error message will be displayed in set_module_found
@@ -187,11 +187,11 @@ macro(set_component_found module component)
   endif()
 
   mark_as_advanced(${ALIAS_FOUND}
-                   ${ALIAS_LIBRARY_DEBUG}
-                   ${ALIAS_LIBRARY_RELEASE}
-                   ${ALIAS_LIBRARIES}
-                   ${ALIAS_DEFINITIONS}
-                   ${ALIAS_VERSION})
+          ${ALIAS_LIBRARY_DEBUG}
+          ${ALIAS_LIBRARY_RELEASE}
+          ${ALIAS_LIBRARIES}
+          ${ALIAS_DEFINITIONS}
+          ${ALIAS_VERSION})
 endmacro()
 
 
@@ -267,39 +267,39 @@ macro(find_component_paths module component library header)
   #set_component_notfound(${module} ${component})
 
   find_path(${ALIAS_INCLUDE_DIRS} ${header}
-    HINTS
-      ${${module}_INCLUDE_HINTS}
-    PATHS
-      ${${module}_INCLUDE_DIR}
-    PATH_SUFFIXES
-      ${${module}_INCLUDE_SUFFIXES} # try find from root module include suffixes
-  )
+          HINTS
+          ${${module}_INCLUDE_HINTS}
+          PATHS
+          ${${module}_INCLUDE_DIR}
+          PATH_SUFFIXES
+          ${${module}_INCLUDE_SUFFIXES} # try find from root module include suffixes
+          )
 
   # Create a Debug and a Release list for multi configuration builds.
   # NOTE: <module>_CONFIGURATION_TYPES must be set to use this.
   if (${module}_MULTI_CONFIGURATION AND (CMAKE_CONFIGURATION_TYPES OR CMAKE_BUILD_TYPE))
     find_library(${ALIAS_LIBRARY_RELEASE}
-      NAMES
-        ${library}
-      HINTS
-        ${${module}_LIBRARY_HINTS}
-      PATHS
-        ${${ALIAS_LIBRARY_DIRS}}
-        ${${module}_LIBRARY_DIR}
-      PATH_SUFFIXES
-        ${${module}_LIBRARY_SUFFIXES}
-    )
+            NAMES
+            ${library}
+            HINTS
+            ${${module}_LIBRARY_HINTS}
+            PATHS
+            ${${ALIAS_LIBRARY_DIRS}}
+            ${${module}_LIBRARY_DIR}
+            PATH_SUFFIXES
+            ${${module}_LIBRARY_SUFFIXES}
+            )
     find_library(${ALIAS_LIBRARY_DEBUG}
-      NAMES
-        ${library}d
-      HINTS
-        ${${module}_LIBRARY_HINTS}
-      PATHS
-        ${${ALIAS_LIBRARY_DIRS}}
-        ${${module}_LIBRARY_DIR}
-      PATH_SUFFIXES
-        ${${module}_LIBRARY_SUFFIXES}
-    )
+            NAMES
+            ${library}d
+            HINTS
+            ${${module}_LIBRARY_HINTS}
+            PATHS
+            ${${ALIAS_LIBRARY_DIRS}}
+            ${${module}_LIBRARY_DIR}
+            PATH_SUFFIXES
+            ${${module}_LIBRARY_SUFFIXES}
+            )
 
     if (${ALIAS_LIBRARY_RELEASE})
       list(APPEND ${ALIAS_LIBRARIES} optimized ${${ALIAS_LIBRARY_RELEASE}})
@@ -322,17 +322,17 @@ macro(find_component_paths module component library header)
     # message(STATUS "LIBRARY_SUFFIXES: ${${module}_LIBRARY_SUFFIXES}")
   else()
     find_library(${ALIAS_LIBRARIES}
-      NAMES
-        ${library}
-        ${library}d
-      HINTS
-        ${${module}_LIBRARY_HINTS}
-      PATHS
-        ${${ALIAS_LIBRARY_DIRS}}
-        ${${module}_LIBRARY_DIR}
-      PATH_SUFFIXES
-        ${${module}_LIBRARY_SUFFIXES}
-    )
+            NAMES
+            ${library}
+            ${library}d
+            HINTS
+            ${${module}_LIBRARY_HINTS}
+            PATHS
+            ${${ALIAS_LIBRARY_DIRS}}
+            ${${module}_LIBRARY_DIR}
+            PATH_SUFFIXES
+            ${${module}_LIBRARY_SUFFIXES}
+            )
   endif()
 
   # print_module_variables(${module})
@@ -361,7 +361,7 @@ macro(find_component module component pkgconfig library header)
     find_package(PkgConfig QUIET)
     if (PKG_CONFIG_FOUND)
       pkg_search_module(${ALIAS} ${pkgconfig} QUIET)
-       messageV("Find Component PkgConfig=${ALIAS}:${${ALIAS}_FOUND}:${${ALIAS}_LIBRARIES}:${${ALIAS}_INCLUDE_DIRS}:${${ALIAS}_LIBRARY_DIRS}:${${ALIAS}_LIBDIR}:${${ALIAS}_INCLUDEDIR}")
+      messageV("Find Component PkgConfig=${ALIAS}:${${ALIAS}_FOUND}:${${ALIAS}_LIBRARIES}:${${ALIAS}_INCLUDE_DIRS}:${${ALIAS}_LIBRARY_DIRS}:${${ALIAS}_LIBDIR}:${${ALIAS}_INCLUDEDIR}")
     endif()
   else()
     messageV("  - ${module} ${component} found without pkg-config.")

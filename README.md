@@ -8,12 +8,12 @@ AgarPlusPlus is a perfect game for everyone
 
 Requirements :
 --------------
-- c++14
-- cmake (>3.9)
+- C++14 (MSVC (>=v141) or GCC (>=6.2.0))
+- CMake (>=3.10) and FindBoost module version with support for Boost 1.66.0
 - libraries ( [Installation] )
-  - Boost
-  - WebRTC
-  - Threads
+  - Boost (>=1.66.0)
+  - RapidJSON (>=1.1.0)
+  - WebRTC (>=M63)
 
 Installation :
 -------------

@@ -1,3 +1,7 @@
+#ifdef _WIN32
+    #include <sdkddkver.h>
+#endif
+
 #include <boost/asio/signal_set.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
@@ -7,11 +11,10 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 
-#include <webrtc/api/audio_codecs/builtin_audio_decoder_factory.h>
-#include <webrtc/api/audio_codecs/builtin_audio_encoder_factory.h>
 #include <webrtc/api/peerconnectioninterface.h>
-#include <webrtc/base/physicalsocketserver.h>
-#include <webrtc/base/ssladapter.h>
+#include <webrtc/media/engine/webrtcmediaengine.h>
+#include <webrtc/rtc_base/physicalsocketserver.h>
+#include <webrtc/rtc_base/ssladapter.h>
 
 #include <thread>
 
@@ -48,7 +51,7 @@ class SignalingRunnable : public rtc::Runnable {
 public:
 
     void Run(rtc::Thread* thread) override {
-        peerConnectionFactory = webrtc::CreatePeerConnectionFactory();
+        peerConnectionFactory = webrtc::CreateModularPeerConnectionFactory(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
         if (peerConnectionFactory.get() == nullptr) {
             std::cout << "Error: Could not create CreatePeerConnectionFactory." << std::endl;
             return;
@@ -92,7 +95,7 @@ int main(int argc, char const* argv[])
             transportPort)};
 
     rtc::InitializeSSL();
-    rtc::InitRandom(rtc::Time());
+    rtc::InitRandom(rtc::Time32());
     std::unique_ptr<rtc::Thread> signalingThread = std::make_unique<rtc::Thread>();
     signalingThread->SetName("signalingThread", nullptr);
     SignalingRunnable signalingRunnable;
@@ -231,7 +234,7 @@ void startWebSocketServer(boost::asio::ip::address const &ipAddress, unsigned sh
 {
     try
     {
-        boost::asio::io_service ioc{1};
+        boost::asio::io_context ioc{1};
 
         tcp::acceptor acceptor{ioc, {ipAddress, transportPort}};
 
@@ -261,14 +264,3 @@ template<class ConstBufferSequence> std::string to_string(ConstBufferSequence co
                  boost::asio::buffer_size(b));
     return s;
 }
-
-/*void handler(const boost::system::error_code& error, int signal_number)
-{
-    if (!error)
-    {
-        if (signal_number == SIGINT)
-        {
-
-        }
-    }
-}*/
