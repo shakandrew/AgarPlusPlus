@@ -54,7 +54,8 @@ find_package(RapidJSON REQUIRED)
 
 set(SOURCE_FILES include/game/GameObject.h include/game/ObjectType.h src/game/GameObject.cpp src/game/ObjectType.cpp
         include/grid/GridsTypes.h include/grid/SpatialGrid.h include/grid/HierarchicalGrid.h src/grid/SpatialGrid.cpp
-        src/grid/HierarchicalGrid.cpp include/webrtc_observers.h src/webrtc_server.cpp)
+        src/grid/HierarchicalGrid.cpp include/time/TimeManager.h src/time/TimeManager.cpp include/webrtc_observers.h
+        src/webrtc_server.cpp)
 include_directories(include include/game include/grid)
 if(Threads_FOUND AND Boost_FOUND AND WEBRTC_FOUND AND RAPIDJSON_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
