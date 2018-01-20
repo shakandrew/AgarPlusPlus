@@ -43,19 +43,19 @@ find_package(Threads REQUIRED)
 
 add_definitions(-DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE)
 add_definitions(-DBOOST_ALL_NO_LIB)
-set(BOOST_ROOT "")
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_STATIC_RUNTIME ON)
 find_package(Boost 1.66.0 REQUIRED COMPONENTS program_options system unit_test_framework)
 
-set(WEBRTC_ROOT_DIR "")
 find_package(WebRTC REQUIRED)
 
-set(RAPIDJSON_ROOT "")
 find_package(RapidJSON REQUIRED)
 
-set(SOURCE_FILES src/webrtc_observers.h src/webrtc_server.cpp)
+set(SOURCE_FILES include/game/GameObject.h include/game/ObjectType.h src/game/GameObject.cpp src/game/ObjectType.cpp
+        include/grid/GridsTypes.h include/grid/SpatialGrid.h include/grid/HierarchicalGrid.h src/grid/SpatialGrid.cpp
+        src/grid/HierarchicalGrid.cpp include/webrtc_observers.h src/webrtc_server.cpp)
+include_directories(include include/game include/grid)
 if(Threads_FOUND AND Boost_FOUND AND WEBRTC_FOUND AND RAPIDJSON_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     include_directories(${WEBRTC_INCLUDE_DIRS})
