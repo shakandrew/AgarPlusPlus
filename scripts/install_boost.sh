@@ -33,7 +33,7 @@ tar -xvzf boost_$VERSION.tar.gz && \
 mv boost_$VERSION src && \
 cd src && \
 mkdir build && \
-./bootstrap.sh && \
-./b2 --prefix=.. --build-dir=build --layout=tagged $WITH threading=multi install && \
+./bootstrap.sh --with-toolset=gcc define="_GLIBCXX_USE_CXX11_ABI=0" --with-libraries=program_options,system,test && \
+./b2 --prefix=.. --build-dir=build install -j 4 --toolset=gcc architecture=x86 address-model=64 define="_GLIBCXX_USE_CXX11_ABI=0" --stagedir=".\stage64" threading=multi runtime-link=static link=static --layout=tagged --with-program_options --with-system --with-test release debug stage && \
 cd .. 
 rm -rf src/ boost_$VERSION.tar.gz
