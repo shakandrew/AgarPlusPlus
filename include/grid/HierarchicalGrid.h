@@ -44,6 +44,8 @@ public:
 
 private:
 
+    void addObjectToSuitableSpatialGrid(GameObject *object);
+
     static bool canFitInto(GameObject const *object, int cellSize);
 
     static int getCellSizeForObject(GameObject const *gameObject);
