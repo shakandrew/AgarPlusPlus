@@ -4,12 +4,11 @@
 
 using std::vector;
 
-GameObject::GameObject(int id, int x, int y, int radius, ObjectType type, ObjectType interactionType,
+GameObject::GameObject(int x, int y, int radius, ObjectType type, ObjectType interactionType,
                        bool selfCollidable, bool resizeable, bool nonDynamic)
     : associatedSpatialGrid{nullptr},
       cellIndex{0},
       extent{2 * radius},
-      id{id},
       indexWithinCell{0},
       indexWithinHierarchicalGrid{0},
       indexWithinSpatialGrid{0},
@@ -17,9 +16,10 @@ GameObject::GameObject(int id, int x, int y, int radius, ObjectType type, Object
       isMoveable{nonDynamic},
       isResizeable{resizeable},
       isSelfCollidable{selfCollidable},
+      radius{radius},
       type{type},
-      xMax{x + radius}, xMin{x - radius},
-      yMax{y + radius}, yMin{y - radius}
+      x{x}, xMax{x + radius}, xMin{x - radius},
+      y{y}, yMax{y + radius}, yMin{y - radius}
 {
 
 }
@@ -124,8 +124,7 @@ bool GameObject::updateWithinAssociatedSpatialGrid()
 
 std::ostream &operator<<(std::ostream &os, GameObject const &object)
 {
-    return os << "( " << object.id << " )"
-              << "[ [x: " << (object.xMin + object.xMax) / 2
+    return os << "[ [x: " << (object.xMin + object.xMax) / 2
               << ", y: " << (object.yMin + object.yMax) / 2
               << ", r: " << object.extent / 2
               << "], [x1: " << object.xMin
@@ -133,4 +132,11 @@ std::ostream &operator<<(std::ostream &os, GameObject const &object)
               << "], [y1: " << object.yMin
               << ", y2: " << object.yMax
               << "] ]";
+}
+
+void GameObject::serialize(PacketDocument &document) const
+{
+    document.serializeHorizontalPosition(x);
+    document.serializeVerticalPosition(y);
+    document.serializeRadius(radius);
 }

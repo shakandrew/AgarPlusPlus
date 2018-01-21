@@ -1,5 +1,5 @@
-#ifndef AGAR_HIERARCHICALGRID_H
-#define AGAR_HIERARCHICALGRID_H
+#ifndef AGARPLUSPLUS_HIERARCHICALGRID_H
+#define AGARPLUSPLUS_HIERARCHICALGRID_H
 
 #include "game/GameObject.h"
 #include "grid/GridsTypes.h"
@@ -43,8 +43,6 @@ public:
     void updateGameObjectsAssociations();
 
 private:
-
-    void addObjectToSuitableSpatialGrid(GameObject *object);
 
     static bool canFitInto(GameObject const *object, int cellSize);
 

@@ -21,7 +21,7 @@ set(CompilerFlags
         CMAKE_C_FLAGS
         CMAKE_C_FLAGS_DEBUG
         CMAKE_C_FLAGS_RELEASE
-        )
+)
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows" AND MSVC)
     foreach(CompilerFlag ${CompilerFlags})
@@ -55,8 +55,18 @@ find_package(RapidJSON REQUIRED)
 set(SOURCE_FILES include/game/GameObject.h include/game/ObjectType.h src/game/GameObject.cpp src/game/ObjectType.cpp
         include/grid/GridsTypes.h include/grid/SpatialGrid.h include/grid/HierarchicalGrid.h src/grid/SpatialGrid.cpp
         src/grid/HierarchicalGrid.cpp include/time/TimeManager.h src/time/TimeManager.cpp include/webrtc_observers.h
-        src/webrtc_server.cpp)
-include_directories(include include/game include/grid)
+        src/webrtc_server.cpp include/network/PacketType.h include/replication/ReplicationActionType.h
+        src/replication/ReplicationManager.cpp include/replication/ReplicationManager.h
+        src/replication/ReplicationCommand.cpp include/replication/ReplicationCommand.h src/network/NetworkContext.cpp
+        include/network/NetworkContext.h src/network/PacketDocument.cpp include/network/PacketDocument.h
+        src/network/PacketType.cpp src/replication/ReplicationActionType.cpp src/network/NetworkManager.cpp
+        include/network/NetworkManager.h src/network/Packet.cpp include/network/Packet.h src/network/PlayerProxy.cpp
+        include/network/PlayerProxy.h src/network/WebRTCConnection.cpp include/network/WebRTCConnection.h
+        src/network/Input.cpp include/network/Input.h src/server/Server.cpp include/server/Server.h
+        src/network/SignalingManager.cpp include/network/SignalingManager.h src/network/WebSocketConnection.cpp
+        include/network/WebSocketConnection.h src/network/WebRTCConfiguration.cpp include/network/WebRTCConfiguration.h
+        src/network/WebRTCConnectionFactory.cpp include/network/WebRTCConnectionFactory.h agar.cpp)
+include_directories(include include/game include/grid include/network include/replication include/server include/time)
 if(Threads_FOUND AND Boost_FOUND AND WEBRTC_FOUND AND RAPIDJSON_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
     include_directories(${WEBRTC_INCLUDE_DIRS})

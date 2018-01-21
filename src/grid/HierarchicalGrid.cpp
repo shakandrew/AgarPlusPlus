@@ -17,11 +17,6 @@ void HierarchicalGrid::addObject(GameObject *object)
 {
     object->setIndexWithinHierarchicalGrid(gameObjects.size());
     gameObjects.push_back(object);
-    addObjectToSuitableSpatialGrid(object);
-}
-
-void HierarchicalGrid::addObjectToSuitableSpatialGrid(GameObject *object)
-{
     if (spatialGrids.empty()) {
         createTailoredGridAndAddObjectToIt(object, getCellSizeForObject(object));
     }
@@ -119,8 +114,9 @@ void HierarchicalGrid::updateGameObjectsAssociations()
     for (auto object : gameObjects) {
         if (!object->getIsMoveable() || object->getIsResizeable()) {
             if (!object->updateWithinAssociatedSpatialGrid()) {
-                object->removeFromAssociatedSpatialGrid();
-                addObjectToSuitableSpatialGrid(object);
+                // TODO: replace remove-add sequence with more effective strategy
+                removeObject(object);
+                addObject(object);
             }
         }
     }

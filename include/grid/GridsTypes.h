@@ -1,5 +1,5 @@
-#ifndef AGAR_GRIDSTYPES_H
-#define AGAR_GRIDSTYPES_H
+#ifndef AGARPLUSPLUS_GRIDSTYPES_H
+#define AGARPLUSPLUS_GRIDSTYPES_H
 
 #include <functional>
 #include <memory>

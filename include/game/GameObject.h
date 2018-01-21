@@ -1,11 +1,14 @@
-#ifndef AGAR_GAMEOBJECT_H
-#define AGAR_GAMEOBJECT_H
+#ifndef AGARPLUSPLUS_GAMEOBJECT_H
+#define AGARPLUSPLUS_GAMEOBJECT_H
 
 #include <vector>
 
 #include "game/ObjectType.h"
 #include "grid/SpatialGrid.h"
+#include "network/PacketDocument.h"
 
+
+class PacketDocument;
 class SpatialGrid;
 
 class GameObject {
@@ -17,8 +20,6 @@ private:
     std::size_t cellIndex;
 
     int extent;
-
-    int id;
 
     std::size_t indexWithinCell;
 
@@ -34,11 +35,17 @@ private:
 
     bool isSelfCollidable;
 
+    int radius;
+
     ObjectType type;
+
+    int x;
 
     int xMax;
 
     int xMin;
+
+    int y;
 
     int yMax;
 
@@ -46,7 +53,7 @@ private:
 
 public:
 
-    GameObject(int id, int x, int y, int radius, ObjectType type = ObjectType::PLAYER,
+    GameObject(int x, int y, int radius, ObjectType type = ObjectType::PLAYER,
                ObjectType interactionType = ObjectType::PLAYER, bool selfCollidable = true,
                bool resizeable = true, bool moveable = true);
 
@@ -75,6 +82,8 @@ public:
     int getYMin() const;
 
     void removeFromAssociatedSpatialGrid();
+
+    void serialize(PacketDocument &document) const;
 
     void setAssociatedSpatialGrid(SpatialGrid *associatedSpatialGrid);
 

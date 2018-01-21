@@ -1,3 +1,4 @@
+/*
 #ifdef _WIN32
     #include <sdkddkver.h>
 #endif
@@ -263,4 +264,4 @@ template<class ConstBufferSequence> std::string to_string(ConstBufferSequence co
         s.append(boost::asio::buffer_cast<char const*>(b),
                  boost::asio::buffer_size(b));
     return s;
-}
+}*/

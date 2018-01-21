@@ -9,7 +9,7 @@ SpatialGrid::SpatialGrid(int xGridSize, int yGridSize, int cellSize, ObjectType 
                                          (xGridSize - 1),   xGridSize,      (xGridSize + 1)}},
           cellCount{(xGridSize) * (yGridSize)},
           cellSize{cellSize},
-          cells{static_cast<std::size_t>(cellCount), GridCell(adjacencyOffsetsForInnerCells.data(), cellSize)},
+          cells{cellCount, GridCell(adjacencyOffsetsForInnerCells.data(), cellSize)},
           gameObjects{},
           holdsSelfCollidable{holdsSelfCollidable},
           occupiedCells{},

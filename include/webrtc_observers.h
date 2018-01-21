@@ -1,5 +1,5 @@
-#ifndef OBSERVERS_H
-#define OBSERVERS_H
+#ifndef AGARPLUSPLUS_OBSERVERS_H
+#define AGARPLUSPLUS_OBSERVERS_H
 
 #include <webrtc/api/peerconnectioninterface.h>
 

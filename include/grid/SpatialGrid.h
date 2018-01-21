@@ -1,5 +1,5 @@
-#ifndef AGAR_SPATIALGRID_H
-#define AGAR_SPATIALGRID_H
+#ifndef AGARPLUSPLUS_SPATIALGRID_H
+#define AGARPLUSPLUS_SPATIALGRID_H
 
 #include <array>
 #include <memory>
