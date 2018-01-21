@@ -9,9 +9,9 @@ SpatialGrid::SpatialGrid(int xGridSize, int yGridSize, int cellSize, ObjectType 
                                          (xGridSize - 1),   xGridSize,      (xGridSize + 1)}},
           cellCount{(xGridSize) * (yGridSize)},
           cellSize{cellSize},
-          cells{cellCount, GridCell(adjacencyOffsetsForInnerCells.data(), cellSize)},
-          holdsSelfCollidable{holdsSelfCollidable},
+          cells{static_cast<std::size_t>(cellCount), GridCell(adjacencyOffsetsForInnerCells.data(), cellSize)},
           gameObjects{},
+          holdsSelfCollidable{holdsSelfCollidable},
           occupiedCells{},
           storageType{storageMask},
           xGridSize{xGridSize},
@@ -157,13 +157,13 @@ bool SpatialGrid::hasSuitableCellSizeForObject(const GameObject *object) const
            ((objectExtent * ratio) <= cellSize);
 }
 
-int SpatialGrid::computeCellIndex(int xWorldPos, int yWorldPos) const
+std::size_t SpatialGrid::computeCellIndex(int xWorldPos, int yWorldPos) const
 {
     int xGridCellCoord = xWorldPos / cellSize;
     int yGridCellCoord = yWorldPos / cellSize;
     auto xHash = computeGridCellCoordHash(xGridCellCoord, xGridSize);
     auto yHash = computeGridCellCoordHash(yGridCellCoord, yGridSize);
-    return (yHash * xGridSize) + xHash;
+    return static_cast<std::size_t>((yHash * xGridSize) + xHash);
 }
 
 int SpatialGrid::computeGridCellCoordHash(int gridCellCoord, int gridSize) const
@@ -216,8 +216,8 @@ void SpatialGrid::detectAndHandleCollisionsWithin(CollisionHandler const &collis
     }
 }
 
-void SpatialGrid::detectAndHandleCollisionsAgainstHigherGrids(Grids::iterator &begin,
-                                                              Grids::iterator &end,
+void SpatialGrid::detectAndHandleCollisionsAgainstHigherGrids(Grids::iterator begin,
+                                                              Grids::iterator end,
                                                               CollisionHandler const &collisionHandler) const
 {
     for (auto object : gameObjects) {

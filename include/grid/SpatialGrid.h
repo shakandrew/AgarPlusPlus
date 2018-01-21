@@ -76,11 +76,11 @@ public:
 
     bool canStoreObject(GameObject const *object) const;
 
-    int computeCellIndex(int xWorldPos, int yWorldPos) const;
+    std::size_t computeCellIndex(int xWorldPos, int yWorldPos) const;
 
     int computeGridCellCoordHash(int gridCellCoord, int gridSize) const;
 
-    void detectAndHandleCollisionsAgainstHigherGrids(Grids::iterator &begin, Grids::iterator &end,
+    void detectAndHandleCollisionsAgainstHigherGrids(Grids::iterator begin, Grids::iterator end,
                                                      CollisionHandler const &collisionHandler) const;
 
     void detectAndHandleCollisionsWithin(CollisionHandler const &collisionHandler) const;

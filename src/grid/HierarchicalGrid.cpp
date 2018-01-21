@@ -1,5 +1,9 @@
 #include "grid/HierarchicalGrid.h"
 
+constexpr int HierarchicalGrid::X_INITIAL_SPATIAL_GRID_SIZE;
+
+constexpr int HierarchicalGrid::Y_INITIAL_SPATIAL_GRID_SIZE;
+
 HierarchicalGrid::HierarchicalGrid(int xSpaceSize, int ySpaceSize)
     : gameObjects{},
       spatialGrids{SpatialGrid::hasLowerLevelThan},
