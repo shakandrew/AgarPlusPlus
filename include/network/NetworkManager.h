@@ -41,6 +41,10 @@ class NetworkManager
 
     std::unordered_map<int, PlayerProxy *> playerIdToPlayerProxy;
 
+    std::function<void(PlayerProxy *)> onNewPlayer;
+
+    std::function<void(PlayerProxy *)> onPlayerDisconnect;
+
 public:
 
     NetworkManager(const ip::tcp::endpoint endpoint, NetworkContext *networkContext, TimeManager *timeManager,
@@ -49,6 +53,10 @@ public:
     void processPacket(Packet &packet);
 
     void disconnectTimedOutPlayers();
+
+    void setOnNewPlayerCallback(std::function<void(PlayerProxy *)> onNewPlayer);
+
+    void setOnPlayerDisconnectCallback(std::function<void(PlayerProxy *)> onPlayerDisconnect);
 
 private:
 

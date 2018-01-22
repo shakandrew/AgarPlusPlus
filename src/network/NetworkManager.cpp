@@ -89,7 +89,9 @@ void NetworkManager::processPacketFromNewPlayer(Packet &packet)
 
         std::string playerName = playerNameValue.GetString();
         auto playerProxy = registerPlayer(packet.getSource(), playerName);
-        // TODO: call server's callback on new player connection
+        if (onNewPlayer) {
+            onNewPlayer(playerProxy);
+        }
         playerProxy->setLastReceivedPacketTimestamp(timeManager->getTime());
 
         sendWelcomePacket(playerProxy);
@@ -239,6 +241,9 @@ void NetworkManager::disconnectTimedOutPlayers()
 void NetworkManager::disconnectPlayer(PlayerProxy *proxy)
 {
     std::cout << "Disconnecting id " << proxy->getPlayerId() << std::endl;
+    if (onPlayerDisconnect) {
+        onPlayerDisconnect(proxy);
+    }
     playerIdToPlayerProxy.erase(proxy->getPlayerId());
     connectionToPlayerProxy.erase(proxy->getConnection());
     auto lastProxy = std::move(playersProxies.back());
@@ -248,4 +253,14 @@ void NetworkManager::disconnectPlayer(PlayerProxy *proxy)
         lastProxy->setIndexWithinProxiesContainer(static_cast<std::size_t>(proxyIndex));
         playersProxies[proxyIndex] = std::move(lastProxy);
     }
+}
+
+void NetworkManager::setOnNewPlayerCallback(std::function<void(PlayerProxy *)> onNewPlayer)
+{
+    this->onNewPlayer = std::move(onNewPlayer);
+}
+
+void NetworkManager::setOnPlayerDisconnectCallback(std::function<void(PlayerProxy *)> onPlayerDisconnect)
+{
+    this->onPlayerDisconnect = std::move(onPlayerDisconnect);
 }

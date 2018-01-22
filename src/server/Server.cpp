@@ -20,7 +20,17 @@ Server::Server(std::string const &address, unsigned short port)
       networkManager(std::make_unique<NetworkManager>(ip::tcp::endpoint(ip::address::from_string(address), port),
                                                       networkContext.get(), timeManager.get(), packetQueue.get()))
 {
+    networkManager->setOnNewPlayerCallback([](PlayerProxy *proxy)
+                                           {
+                                               std::cout << "Server was notified about new player." << std::endl;
+                                           }
+    );
 
+    networkManager->setOnPlayerDisconnectCallback([](PlayerProxy *proxy)
+                                                  {
+                                                      std::cout << "Server was notified about disconnected player." << std::endl;
+                                                  }
+    );
 }
 
 void Server::run()
@@ -34,14 +44,13 @@ void Server::run()
 
         while(!packetQueue->empty() && processedPackets < MAX_PACKETS_PER_FRAME) {
             auto &packet = packetQueue->front();
-            // TODO: pass server's callback for new players' handling
             networkManager->processPacket(packet);
             if (!packetQueue->pop()) {
                 std::cout << "Failed to pop packet from packet queue." << std::endl;
             }
             processedPackets += 1;
         }
-        // TODO: pass server's callback for disconnected (timeout) players' handling
+
         networkManager->disconnectTimedOutPlayers();
 
         // TODO: player re-spawn
