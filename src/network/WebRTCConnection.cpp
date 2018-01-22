@@ -24,6 +24,8 @@ WebRTCConnection::WebRTCConnection(WebRTCConfiguration *configuration,
 
 void WebRTCConnection::close()
 {
+    // TODO: take into consideration observers' methods
+    // (Close methods here are async and observer's methods are not re-entrant)
     dataChannel->UnregisterObserver();
     dataChannel->Close();
     peerConnection->Close();

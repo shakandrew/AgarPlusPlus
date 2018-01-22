@@ -25,7 +25,6 @@ void WebSocketConnection::close()
     webSocket.close(boost::beast::websocket::close_reason(boost::beast::websocket::close_code::normal), errorCode);
     if(errorCode) {
         std::cout << "Close error: " << errorCode.message() << std::endl;
-        return;
     }
 }
 
