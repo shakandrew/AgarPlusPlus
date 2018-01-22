@@ -8,6 +8,10 @@
 
 class Server
 {
+    static constexpr int FRAMES_PER_SECOND = 1;
+
+    static constexpr double FRAME_DURATION = 1.0 / FRAMES_PER_SECOND;
+
     static constexpr int MAX_PACKETS_PER_FRAME = 20;
 
     static constexpr int PACKET_QUEUE_CAPACITY = 100;

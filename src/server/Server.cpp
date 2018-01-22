@@ -3,10 +3,15 @@
 #endif
 
 #include <iostream>
+#include <thread>
 
 #include "Server.h"
 
 namespace ip = boost::asio::ip;
+
+constexpr int Server::FRAMES_PER_SECOND;
+
+constexpr double Server::FRAME_DURATION;
 
 constexpr int Server::MAX_PACKETS_PER_FRAME;
 
@@ -49,7 +54,7 @@ void Server::run()
             }
             processedPackets += 1;
         }
-        
+
         networkManager->disconnectTimedOutPlayers();
 
         // TODO: player re-spawn
@@ -57,5 +62,10 @@ void Server::run()
         // TODO: game world update
 
         // TODO: send outgoing packets
+
+        while (timeManager->getTimeSinceLastTick() < FRAME_DURATION) {
+            auto sleepTime = static_cast<long>(FRAME_DURATION - timeManager->getTimeSinceLastTick() * 1000);
+            std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+        }
     }
 }
