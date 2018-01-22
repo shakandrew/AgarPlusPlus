@@ -65,7 +65,7 @@ set(SOURCE_FILES include/game/GameObject.h include/game/ObjectType.h src/game/Ga
         src/network/Input.cpp include/network/Input.h src/server/Server.cpp include/server/Server.h
         src/network/SignalingManager.cpp include/network/SignalingManager.h src/network/WebSocketConnection.cpp
         include/network/WebSocketConnection.h src/network/WebRTCConfiguration.cpp include/network/WebRTCConfiguration.h
-        src/network/WebRTCConnectionFactory.cpp include/network/WebRTCConnectionFactory.h agar.cpp)
+        src/network/WebRTCConnectionFactory.cpp include/network/WebRTCConnectionFactory.h agar.cpp include/game/Model.h include/game/FoodCell.h include/game/BoostCell.h include/game/PlayerCell.h include/game/Range.h src/game/BoostCell.cpp src/game/FoodCell.cpp src/game/Model.cpp src/game/PlayerCell.cpp src/game/Range.cpp)
 include_directories(include include/game include/grid include/network include/replication include/server include/time)
 if(Threads_FOUND AND Boost_FOUND AND WEBRTC_FOUND AND RAPIDJSON_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})

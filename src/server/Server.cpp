@@ -27,6 +27,7 @@ Server::Server(std::string const &address, unsigned short port)
 {
     networkManager->setOnNewPlayerCallback([](PlayerProxy *proxy)
                                            {
+                                               &model.createNewPlayerCell();
                                                std::cout << "Server was notified about new player." << std::endl;
                                            }
     );

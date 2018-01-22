@@ -1,3 +1,10 @@
+/*!
+ * \author Mateusz Mobieszek
+ * \version 0.1
+ * \date 2018-01-21
+ * \copyright GNU Public License
+ * \mainpage LOL
+ */
 #ifndef AGARPLUSPLUS_GAMEOBJECT_H
 #define AGARPLUSPLUS_GAMEOBJECT_H
 
