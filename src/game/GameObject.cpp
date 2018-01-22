@@ -150,3 +150,27 @@ void GameObject::setIndexWithinGameModelContainer(std::size_t indexWithinGameMod
 {
     this->indexWithinGameModelContainer = indexWithinGameModelContainer;
 }
+
+int GameObject::getX() const {
+    return x;
+}
+
+void GameObject::setX(int x) {
+    GameObject::x = x;
+}
+
+int GameObject::getY() const {
+    return y;
+}
+
+void GameObject::setY(int y) {
+    GameObject::y = y;
+}
+
+int GameObject::getRadius() const {
+    return radius;
+}
+
+void GameObject::setRadius(int radius) {
+    GameObject::radius = radius;
+}

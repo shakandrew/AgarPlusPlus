@@ -51,7 +51,11 @@ void SignalingManager::run()
         return;
     }
 
-	webSocketThread = std::make_unique<std::thread>([this]() { ioContext.run(); });
+	webSocketThread = std::make_unique<std::thread>([this]()
+                                                    {
+                                                        std::this_thread::sleep_for(std::chrono::seconds(1));
+                                                        ioContext.run();
+                                                    });
 
     accept();
 }

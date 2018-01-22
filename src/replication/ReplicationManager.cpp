@@ -21,7 +21,7 @@ void ReplicationManager::serialize(PacketDocument &document)
 {
     for (auto &idToCommand : networkIdToReplicationCommand) {
         auto command = idToCommand.second.get();
-        if (command->getIsDirty()) {
+        if (true) {
             auto id = idToCommand.first;
             document.serializeNetworkId(id);
             auto action = command->getAction();

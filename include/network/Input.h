@@ -3,11 +3,11 @@
 
 class Input {
 
-    int angle;
+
 
     bool dirty;
 
-    int speed;
+
 
 public:
 
@@ -16,6 +16,7 @@ public:
     bool isDirty() const;
 
     void setAsClean();
-
+    int speed;
+    int angle;
 };
 #endif

@@ -26,7 +26,7 @@ Server::Server(std::string const &address, unsigned short port)
                                                       networkContext.get(), timeManager.get(), packetQueue.get())),
       gameModel(std::make_unique<Model>())
 {
-    networkManager->setOnNewPlayerCallback([](PlayerProxy *proxy)
+    networkManager->setOnNewPlayerCallback([this](PlayerProxy *proxy)
                                            {
                                                auto object = gameModel->createAndAddNewPlayerCell();
                                                auto objectId = networkContext->registerIfAbsentAnGetIdForObject(object);
@@ -35,7 +35,7 @@ Server::Server(std::string const &address, unsigned short port)
                                            }
     );
 
-    networkManager->setOnPlayerDisconnectCallback([](PlayerProxy *proxy)
+    networkManager->setOnPlayerDisconnectCallback([this](PlayerProxy *proxy)
                                                   {
                                                       auto objectId = proxy->getPlayersObjectId();
                                                       auto object = networkContext->getObjectForId(objectId);
@@ -67,10 +67,16 @@ void Server::run()
 
         networkManager->disconnectTimedOutPlayers();
 
-        // TODO: player re-spawn
-
-        // TODO: game world update
-
+        for (auto &i: networkManager->getPlayersProxies()) {
+            auto id = i->getPlayersObjectId();
+            auto obj = networkContext->getObjectForId(id);
+            if (obj) {
+                auto input = i->getLastReceivedInput();
+                if(input) {
+                    gameModel->moveObject(obj, i->getLastReceivedInput());
+                }
+            }
+        }
         networkManager->sendStateUpdatePackets();
 
         while (timeManager->getTimeSinceLastTick() < FRAME_DURATION) {

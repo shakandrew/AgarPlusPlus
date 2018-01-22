@@ -284,7 +284,7 @@ void NetworkManager::unregisterPlayer(PlayerProxy *proxy)
         lastProxy->setIndexWithinProxiesContainer(static_cast<std::size_t>(proxyIndex));
         playersProxies[proxyIndex] = std::move(lastProxy);
     }
-    connection->close();
+    //connection->close();
     auto objectId = proxy->getPlayersObjectId();
     for (auto &otherProxy : playersProxies) {
         auto proxyObjectId = otherProxy->getPlayersObjectId();
@@ -304,3 +304,8 @@ void NetworkManager::setOnPlayerDisconnectCallback(std::function<void(PlayerProx
 {
     this->onPlayerDisconnect = std::move(onPlayerDisconnect);
 }
+
+const std::vector<std::unique_ptr<PlayerProxy>> &NetworkManager::getPlayersProxies() const {
+    return playersProxies;
+}
+

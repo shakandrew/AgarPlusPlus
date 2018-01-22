@@ -36,6 +36,10 @@ class NetworkManager
     TimeManager *timeManager;
 
     std::vector<std::unique_ptr<PlayerProxy>> playersProxies;
+public:
+    const std::vector<std::unique_ptr<PlayerProxy>> &getPlayersProxies() const;
+
+private:
 
     std::unordered_map<WebRTCConnection *, PlayerProxy *> connectionToPlayerProxy;
 

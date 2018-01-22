@@ -14,6 +14,10 @@ class PlayerProxy
     std::size_t indexWithinProxiesContainer;
 
     std::unique_ptr<Input> lastReceivedInput;
+public:
+    Input *getLastReceivedInput();
+
+private:
 
     double lastReceivedPacketTimestamp;
 

@@ -45,16 +45,34 @@ private:
     bool isSelfCollidable;
 
     int radius;
+public:
+    int getRadius() const;
+
+    void setRadius(int radius);
+
+private:
 
     ObjectType type;
 
     int x;
+public:
+    int getX() const;
+
+    void setX(int x);
+
+private:
 
     int xMax;
 
     int xMin;
 
     int y;
+public:
+    int getY() const;
+
+    void setY(int y);
+
+private:
 
     int yMax;
 

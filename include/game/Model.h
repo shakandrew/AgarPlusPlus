@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include <network/NetworkContext.h>
+#include <network/Input.h>
 
 class Model
 {
@@ -15,6 +16,8 @@ public:
     void addObject(std::unique_ptr<GameObject> object);
 
     GameObject * createAndAddNewPlayerCell();
+
+    void moveObject(GameObject* obj, Input *input);
 
     void removeObject(GameObject *object);
 

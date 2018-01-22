@@ -74,3 +74,7 @@ int PlayerProxy::getPlayersObjectId() const
 {
     return playersObjectId;
 }
+
+Input *PlayerProxy::getLastReceivedInput() {
+    return lastReceivedInput.get();
+}
