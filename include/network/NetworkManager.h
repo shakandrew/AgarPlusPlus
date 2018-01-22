@@ -47,12 +47,14 @@ class NetworkManager
 
 public:
 
-    NetworkManager(const ip::tcp::endpoint endpoint, NetworkContext *networkContext, TimeManager *timeManager,
+    NetworkManager(ip::tcp::endpoint const endpoint, NetworkContext *networkContext, TimeManager *timeManager,
                    boost::lockfree::spsc_queue<Packet> *packetQueue);
 
     void processPacket(Packet &packet);
 
     void disconnectTimedOutPlayers();
+
+    void sendStateUpdatePackets();
 
     void setOnNewPlayerCallback(std::function<void(PlayerProxy *)> onNewPlayer);
 
@@ -64,6 +66,8 @@ private:
 
     void processPacketFromExistingPlayer(PlayerProxy *proxy, Packet &packet);
 
+    void sendStatePacket(PlayerProxy *proxy);
+
     void sendWelcomePacket(PlayerProxy *proxy);
 
     void sendPacket(std::string const &buffer, WebRTCConnection *connection);
@@ -72,7 +76,7 @@ private:
 
     PlayerProxy* registerPlayer(WebRTCConnection *connection, std::string const &name);
 
-    void disconnectPlayer(PlayerProxy *proxy);
+    void unregisterPlayer(PlayerProxy *proxy);
 };
 
 #endif

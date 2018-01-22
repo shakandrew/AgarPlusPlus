@@ -1,6 +1,8 @@
 #ifndef AGARPLUSPLUS_PACKETDOCUMENT_H
 #define AGARPLUSPLUS_PACKETDOCUMENT_H
 
+#include <string>
+
 #include <rapidjson/document.h>
 #include <rapidjson/rapidjson.h>
 
@@ -28,6 +30,8 @@ public:
     void serializeVerticalPosition(int y);
 
     void serializeRadius(int r);
+
+    std::string toString();
 
 private:
 

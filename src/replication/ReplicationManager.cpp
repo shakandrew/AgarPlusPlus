@@ -7,17 +7,17 @@ ReplicationManager::ReplicationManager(NetworkContext *networkContext)
 
 }
 
-void ReplicationManager::destroyObject(int networkId)
-{
-    networkIdToReplicationCommand[networkId]->convertToDestroy();
-}
-
 void ReplicationManager::instantiateObject(int networkId)
 {
     networkIdToReplicationCommand[networkId] = std::move(std::make_unique<ReplicationCommand>(ReplicationActionType::INST));
 }
 
-void ReplicationManager::serialize(PacketDocument document)
+void ReplicationManager::destroyObject(int networkId)
+{
+    networkIdToReplicationCommand[networkId]->convertToDestroy();
+}
+
+void ReplicationManager::serialize(PacketDocument &document)
 {
     for (auto &idToCommand : networkIdToReplicationCommand) {
         auto command = idToCommand.second.get();

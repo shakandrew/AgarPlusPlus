@@ -23,11 +23,11 @@ public:
 
     ReplicationManager(ReplicationManager const &) = delete;
 
-    void destroyObject(int networkId);
-
     void instantiateObject(int networkId);
 
-    void serialize(PacketDocument document);
+    void destroyObject(int networkId);
+
+    void serialize(PacketDocument &document);
 
     void stopReplicatingObject(int networkId);
 

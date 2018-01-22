@@ -54,3 +54,8 @@ double PlayerProxy::getLastReceivedPacketTimestamp() const
 {
     return lastReceivedPacketTimestamp;
 }
+
+bool PlayerProxy::isLastReceivedInputDirty() const
+{
+    return lastReceivedInput && lastReceivedInput->isDirty();
+}

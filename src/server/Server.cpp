@@ -61,7 +61,7 @@ void Server::run()
 
         // TODO: game world update
 
-        // TODO: send outgoing packets
+        networkManager->sendStateUpdatePackets();
 
         while (timeManager->getTimeSinceLastTick() < FRAME_DURATION) {
             auto sleepTime = static_cast<long>(FRAME_DURATION - timeManager->getTimeSinceLastTick() * 1000);

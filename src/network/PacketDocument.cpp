@@ -1,3 +1,6 @@
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
+
 #include "network/PacketDocument.h"
 
 using namespace rapidjson;
@@ -64,4 +67,13 @@ void PacketDocument::serializeRadius(int r)
 {
     auto &allocator = message.GetAllocator();
     message["r"].PushBack(r, allocator);
+}
+
+std::string PacketDocument::toString()
+{
+    StringBuffer buffer;
+    Writer<StringBuffer> writer(buffer);
+    message.Accept(writer);
+
+    return buffer.GetString();
 }

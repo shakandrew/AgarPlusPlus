@@ -124,6 +124,23 @@ PlayerProxy* NetworkManager::registerPlayer(WebRTCConnection *connection, std::s
     return proxyPointer;
 }
 
+void NetworkManager::sendStateUpdatePackets()
+{
+    for (auto &proxy : playersProxies) {
+        if (proxy->isLastReceivedInputDirty()) {
+            sendStatePacket(proxy.get());
+        }
+    }
+}
+
+void NetworkManager::sendStatePacket(PlayerProxy *proxy)
+{
+    PacketDocument message(PacketType::UPDT);
+    auto replicationManager = proxy->getReplicationManager();
+    replicationManager->serialize(message);
+    sendPacket(message.toString(), proxy->getConnection());
+}
+
 void NetworkManager::sendWelcomePacket(PlayerProxy *proxy)
 {
     // TODO: build PacketDocument object
@@ -234,11 +251,11 @@ void NetworkManager::disconnectTimedOutPlayers()
         }
     }
     for (auto &proxy : proxiesOfPlayersToDisconnect) {
-        disconnectPlayer(proxy);
+        unregisterPlayer(proxy);
     }
 }
 
-void NetworkManager::disconnectPlayer(PlayerProxy *proxy)
+void NetworkManager::unregisterPlayer(PlayerProxy *proxy)
 {
     std::cout << "Disconnecting id " << proxy->getPlayerId() << std::endl;
     if (onPlayerDisconnect) {

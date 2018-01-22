@@ -38,6 +38,8 @@ public:
 
     ReplicationManager* getReplicationManager();
 
+    bool isLastReceivedInputDirty() const;
+
     void setIndexWithinProxiesContainer(std::size_t index);
 
     void setLastReceivedInput(std::unique_ptr<Input> input);
