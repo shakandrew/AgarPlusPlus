@@ -26,7 +26,7 @@ NetworkManager::NetworkManager(const ip::tcp::endpoint endpoint, NetworkContext 
       configuration{std::make_unique<WebRTCConfiguration>()},
       networkContext{networkContext},
       packetQueue{packetQueue},
-      playerDisconnectTimeout{300},
+      playerDisconnectTimeout{15},
       webRTCConnectionFactory{std::make_shared<WebRTCConnectionFactory>(configuration.get(), packetQueue)},
       signalingManager{std::make_shared<SignalingManager>(ioContext, endpoint, webRTCConnectionFactory.get())},
       timeManager{timeManager}
@@ -238,9 +238,10 @@ void NetworkManager::disconnectTimedOutPlayers()
 
 void NetworkManager::disconnectPlayer(PlayerProxy *proxy)
 {
+    std::cout << "Disconnecting id " << proxy->getPlayerId() << std::endl;
     playerIdToPlayerProxy.erase(proxy->getPlayerId());
     connectionToPlayerProxy.erase(proxy->getConnection());
-    auto &lastProxy = playersProxies.back();
+    auto lastProxy = std::move(playersProxies.back());
     playersProxies.pop_back();
     if (proxy != lastProxy.get()) {
         auto proxyIndex = proxy->getIndexWithinProxiesContainer();
