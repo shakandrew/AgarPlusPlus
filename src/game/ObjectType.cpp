@@ -1,5 +1,6 @@
-#include <type_traits>
 #include <stdexcept>
+#include <type_traits>
+
 #include "game/ObjectType.h"
 
 std::string objectTypeAsString(ObjectType type)

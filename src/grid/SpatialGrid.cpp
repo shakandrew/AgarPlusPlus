@@ -5,11 +5,11 @@
 
 SpatialGrid::SpatialGrid(int xGridSize, int yGridSize, int cellSize, ObjectType storageMask, bool holdsSelfCollidable)
         : adjacencyOffsetsForInnerCells{{-(xGridSize + 1),  -(xGridSize),   -(xGridSize - 1),
-                                         -1,                0,              1,
-                                         (xGridSize - 1),   xGridSize,      (xGridSize + 1)}},
+                                                -1,                0,              1,
+                                                (xGridSize - 1),   xGridSize,      (xGridSize + 1)}},
           cellCount{(xGridSize) * (yGridSize)},
           cellSize{cellSize},
-          cells{cellCount, GridCell(adjacencyOffsetsForInnerCells.data(), cellSize)},
+          cells{static_cast<std::size_t>(cellCount), GridCell(adjacencyOffsetsForInnerCells.data(), cellSize)},
           gameObjects{},
           holdsSelfCollidable{holdsSelfCollidable},
           occupiedCells{},
@@ -250,21 +250,21 @@ bool SpatialGrid::isAboveObjectsGridIfInsideTheSameBucket(GameObject const *game
 }
 
 SpatialGrid::GridCell::GridCell(int *adjacencyOffsets, int cellSize)
-    : adjacentCellsOffsets{adjacencyOffsets},
-      gameObjects{nullptr},
-      indexInOccupiedCellsContainer{0},
-      outerCellAdjacentCellsOffsets{nullptr},
-      size{cellSize}
+        : adjacentCellsOffsets{adjacencyOffsets},
+          gameObjects{nullptr},
+          indexInOccupiedCellsContainer{0},
+          outerCellAdjacentCellsOffsets{nullptr},
+          size{cellSize}
 {
 
 }
 
 SpatialGrid::GridCell::GridCell(SpatialGrid::GridCell const &gridCell)
-    : adjacentCellsOffsets{gridCell.adjacentCellsOffsets},
-      gameObjects{nullptr},
-      indexInOccupiedCellsContainer{0},
-      outerCellAdjacentCellsOffsets{nullptr},
-      size{gridCell.size}
+        : adjacentCellsOffsets{gridCell.adjacentCellsOffsets},
+          gameObjects{nullptr},
+          indexInOccupiedCellsContainer{0},
+          outerCellAdjacentCellsOffsets{nullptr},
+          size{gridCell.size}
 {
 
 }

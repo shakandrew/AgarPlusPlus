@@ -5,10 +5,10 @@ constexpr int HierarchicalGrid::X_INITIAL_SPATIAL_GRID_SIZE;
 constexpr int HierarchicalGrid::Y_INITIAL_SPATIAL_GRID_SIZE;
 
 HierarchicalGrid::HierarchicalGrid(int xSpaceSize, int ySpaceSize)
-    : gameObjects{},
-      spatialGrids{SpatialGrid::hasLowerLevelThan},
-      xSpaceSize{xSpaceSize},
-      ySpaceSize{ySpaceSize}
+        : gameObjects{},
+          spatialGrids{SpatialGrid::hasLowerLevelThan},
+          xSpaceSize{xSpaceSize},
+          ySpaceSize{ySpaceSize}
 {
     gameObjects.reserve(static_cast<std::size_t>(xSpaceSize * ySpaceSize * INITIAL_CELL_CAPACITY));
 }
@@ -17,6 +17,11 @@ void HierarchicalGrid::addObject(GameObject *object)
 {
     object->setIndexWithinHierarchicalGrid(gameObjects.size());
     gameObjects.push_back(object);
+    addObjectToSuitableSpatialGrid(object);
+}
+
+void HierarchicalGrid::addObjectToSuitableSpatialGrid(GameObject *object)
+{
     if (spatialGrids.empty()) {
         createTailoredGridAndAddObjectToIt(object, getCellSizeForObject(object));
     }
@@ -42,8 +47,8 @@ void HierarchicalGrid::addObject(GameObject *object)
                         return;
                     }
                     else if (( nextGridIterator == end) ||
-                            ((*nextGridIterator)->getCellSize() > currentCellSize) ||
-                            (currentGrid->isAboveObjectsGridIfInsideTheSameBucket(object))) {
+                             ((*nextGridIterator)->getCellSize() > currentCellSize) ||
+                             (currentGrid->isAboveObjectsGridIfInsideTheSameBucket(object))) {
                         createTailoredGridAndAddObjectToIt(object, currentCellSize);
                         return;
                     }
@@ -114,9 +119,8 @@ void HierarchicalGrid::updateGameObjectsAssociations()
     for (auto object : gameObjects) {
         if (!object->getIsMoveable() || object->getIsResizeable()) {
             if (!object->updateWithinAssociatedSpatialGrid()) {
-                // TODO: replace remove-add sequence with more effective strategy
-                removeObject(object);
-                addObject(object);
+                object->removeFromAssociatedSpatialGrid();
+                addObjectToSuitableSpatialGrid(object);
             }
         }
     }

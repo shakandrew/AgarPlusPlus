@@ -14,10 +14,10 @@ WebRTCConnection::WebRTCConnection(WebRTCConfiguration *configuration,
                                    rtc::scoped_refptr<webrtc::PeerConnectionFactoryInterface> peerConnectionFactory,
                                    std::shared_ptr<WebSocketConnection> signalingConnection,
                                    boost::lockfree::spsc_queue<Packet> *packetQueue)
-    : configuration(configuration),
-      peerConnectionFactory(peerConnectionFactory),
-      signalingConnection(std::move(signalingConnection)),
-      packetQueue(packetQueue)
+        : configuration(configuration),
+          peerConnectionFactory(peerConnectionFactory),
+          signalingConnection(std::move(signalingConnection)),
+          packetQueue(packetQueue)
 {
 
 }
@@ -97,7 +97,7 @@ void WebRTCConnection::OnBufferedAmountChange(uint64_t)
 void WebRTCConnection::OnMessage(const webrtc::DataBuffer &buffer)
 {
     Packet packet(this, std::string(buffer.data.data<char>(), buffer.data.size()));
-    packetQueue->push(packet);
+    packetQueue->push(std::move(packet));
 }
 
 void WebRTCConnection::OnStateChange()
