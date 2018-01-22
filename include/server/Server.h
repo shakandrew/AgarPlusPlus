@@ -3,6 +3,7 @@
 
 #include <boost/lockfree/spsc_queue.hpp>
 
+#include <game/Model.h>
 #include "network/NetworkManager.h"
 #include "time/TimeManager.h"
 
@@ -25,6 +26,8 @@ class Server
     std::unique_ptr<TimeManager> timeManager;
 
     std::unique_ptr<NetworkManager> networkManager;
+
+    std::unique_ptr<Model> gameModel;
 
 public:
 

@@ -140,3 +140,13 @@ void GameObject::serialize(PacketDocument &document) const
     document.serializeVerticalPosition(y);
     document.serializeRadius(radius);
 }
+
+std::size_t GameObject::getIndexWithinGameModelContainer() const
+{
+    return indexWithinGameModelContainer;
+}
+
+void GameObject::setIndexWithinGameModelContainer(std::size_t indexWithinGameModelContainer)
+{
+    this->indexWithinGameModelContainer = indexWithinGameModelContainer;
+}

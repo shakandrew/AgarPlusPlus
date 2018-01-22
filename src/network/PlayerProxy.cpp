@@ -59,3 +59,18 @@ bool PlayerProxy::isLastReceivedInputDirty() const
 {
     return lastReceivedInput && lastReceivedInput->isDirty();
 }
+
+void PlayerProxy::assignPlayersObject(int id)
+{
+    setPlayersObjectId(id);
+}
+
+void PlayerProxy::setPlayersObjectId(int id)
+{
+    playersObjectId = id;
+}
+
+int PlayerProxy::getPlayersObjectId() const
+{
+    return playersObjectId;
+}

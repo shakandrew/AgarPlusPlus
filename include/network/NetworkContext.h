@@ -19,13 +19,15 @@ public:
 
     std::unordered_map<int, GameObject *> const& getAllIdToObjectPairs() const;
 
-    int getIdForObject(GameObject *object);
+    int registerIfAbsentAnGetIdForObject(GameObject *object);
 
     GameObject* getObjectForId(int id) const;
 
-    void registerObject(GameObject *object, int id);
-
     void unregisterObject(GameObject *object);
+
+private:
+
+    void registerObject(GameObject *object, int id);
 };
 
 #endif

@@ -105,6 +105,15 @@ void NetworkManager::processPacketFromNewPlayer(Packet &packet)
         for (auto const &pair : networkContext->getAllIdToObjectPairs()) {
             playerReplicationManager->instantiateObject(pair.first);
         }
+        // TODO: Add this player's object to every other proxy's replication manager
+        auto objectId = playerProxy->getPlayersObjectId();
+        for (auto &proxy : playersProxies) {
+            auto proxyObjectId = proxy->getPlayersObjectId();
+            if (objectId != proxyObjectId) {
+                auto replicationManager = proxy->getReplicationManager();
+                replicationManager->instantiateObject(objectId);
+            }
+        }
     }
 }
 
@@ -276,6 +285,14 @@ void NetworkManager::unregisterPlayer(PlayerProxy *proxy)
         playersProxies[proxyIndex] = std::move(lastProxy);
     }
     connection->close();
+    auto objectId = proxy->getPlayersObjectId();
+    for (auto &otherProxy : playersProxies) {
+        auto proxyObjectId = otherProxy->getPlayersObjectId();
+        if (objectId != proxyObjectId) {
+            auto replicationManager = otherProxy->getReplicationManager();
+            replicationManager->destroyObject(objectId);
+        }
+    }
 }
 
 void NetworkManager::setOnNewPlayerCallback(std::function<void(PlayerProxy *)> onNewPlayer)

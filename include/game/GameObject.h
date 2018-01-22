@@ -30,6 +30,8 @@ private:
 
     std::size_t indexWithinCell;
 
+    std::size_t indexWithinGameModelContainer;
+
     std::size_t indexWithinHierarchicalGrid;
 
     std::size_t indexWithinSpatialGrid;
@@ -74,6 +76,8 @@ public:
 
     std::size_t getIndexWithinSpatialGrid() const;
 
+    std::size_t getIndexWithinGameModelContainer() const;
+
     ObjectType getInteractionType() const;
 
     bool getIsMoveable() const;
@@ -99,6 +103,8 @@ public:
     void setIndexWithinHierarchicalGrid(std::size_t indexWithinHierarchicalGrid);
 
     void setIndexWithinSpatialGrid(std::size_t indexWithinSpatialGrid);
+
+    void setIndexWithinGameModelContainer(std::size_t indexWithinGameModelContainer);
 
     bool testForCollisionWithAABB(GameObject const &otherObject) const;
 

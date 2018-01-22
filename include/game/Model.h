@@ -1,19 +1,23 @@
-//
-// Created by koshachok on 1/22/18.
-//
-
-#include "GameObject.h"
-
 #ifndef AGARPLUSPLUS_MODEL_H
 #define AGARPLUSPLUS_MODEL_H
 
-#endif //AGARPLUSPLUS_MODEL_H
+#include "GameObject.h"
+#include <network/NetworkContext.h>
 
 class Model
 {
-private:
-    std::vector<GameObject> objects;
+    std::vector<std::unique_ptr<GameObject>> gameObjects;
+
 public:
 
+    Model();
+
+    void addObject(std::unique_ptr<GameObject> object);
+
+    GameObject * createAndAddNewPlayerCell();
+
+    void removeObject(GameObject *object);
 
 };
+
+#endif

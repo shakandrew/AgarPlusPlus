@@ -1,13 +1,7 @@
-//
-// Created by koshachok on 1/22/18.
-//
-
-#include "GameObject.h"
-
 #ifndef AGARPLUSPLUS_PLAYERCELL_H
 #define AGARPLUSPLUS_PLAYERCELL_H
 
-#endif //AGARPLUSPLUS_PLAYERCELL_H
+#include "GameObject.h"
 
 class PlayerCell : public GameObject {
 private:
@@ -17,3 +11,5 @@ public:
                                                       ObjectType::PLAYER | ObjectType::RANGE | ObjectType::BOOST |
                                                       ObjectType::FOOD, true, true, true) {};
 };
+
+#endif

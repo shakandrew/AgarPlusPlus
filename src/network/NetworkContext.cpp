@@ -10,7 +10,7 @@ std::unordered_map<int, GameObject *> const &NetworkContext::getAllIdToObjectPai
     return idToObject;
 }
 
-int NetworkContext::getIdForObject(GameObject *object)
+int NetworkContext::registerIfAbsentAnGetIdForObject(GameObject *object)
 {
     auto found = objectToId.find(object);
     if (found != objectToId.end()) {

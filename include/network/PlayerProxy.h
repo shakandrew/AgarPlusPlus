@@ -19,12 +19,16 @@ class PlayerProxy
 
     std::string name;
 
+    int playersObjectId;
+
     std::unique_ptr<ReplicationManager> replicationManager;
 
 public:
 
     PlayerProxy(WebRTCConnection *connection, std::string const &name, int id,
                     std::unique_ptr<ReplicationManager> replicationManager);
+
+    void assignPlayersObject(int id);
 
     WebRTCConnection* getConnection() const;
 
@@ -36,6 +40,8 @@ public:
 
     int getPlayerId() const;
 
+    int getPlayersObjectId() const;
+
     ReplicationManager* getReplicationManager();
 
     bool isLastReceivedInputDirty() const;
@@ -45,6 +51,8 @@ public:
     void setLastReceivedInput(std::unique_ptr<Input> input);
 
     void setLastReceivedPacketTimestamp(double timestamp);
+
+    void setPlayersObjectId(int id);
 
 };
 

@@ -23,18 +23,27 @@ Server::Server(std::string const &address, unsigned short port)
       shouldQuit(false),
       timeManager(std::make_unique<TimeManager>()),
       networkManager(std::make_unique<NetworkManager>(ip::tcp::endpoint(ip::address::from_string(address), port),
-                                                      networkContext.get(), timeManager.get(), packetQueue.get()))
+                                                      networkContext.get(), timeManager.get(), packetQueue.get())),
+      gameModel(std::make_unique<Model>())
 {
     networkManager->setOnNewPlayerCallback([](PlayerProxy *proxy)
                                            {
-                                               &model.createNewPlayerCell();
-                                               std::cout << "Server was notified about new player." << std::endl;
+                                               auto object = gameModel->createAndAddNewPlayerCell();
+                                               auto objectId = networkContext->registerIfAbsentAnGetIdForObject(object);
+                                               proxy->setPlayersObjectId(objectId);
+                                               // TODO: add created object to every proxy's replicationManager
                                            }
     );
 
     networkManager->setOnPlayerDisconnectCallback([](PlayerProxy *proxy)
                                                   {
-                                                      std::cout << "Server was notified about disconnected player." << std::endl;
+                                                      auto objectId = proxy->getPlayersObjectId();
+                                                      auto object = networkContext->getObjectForId(objectId);
+                                                      if (!object) {
+                                                          std::cout << "No object for such id in network context." << std::endl;
+                                                      }
+                                                      gameModel->removeObject(object);
+                                                      // TODO: remove player's object from every proxy's replicationManager
                                                   }
     );
 }
