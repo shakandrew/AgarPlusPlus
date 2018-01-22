@@ -1,5 +1,5 @@
 #include "replication/ReplicationActionType.h"
-
+#include <stdexcept>
 std::string replicationActionTypeAsString(ReplicationActionType type)
 {
     switch (type) {

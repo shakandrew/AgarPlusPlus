@@ -1,5 +1,5 @@
 #include "network/PacketType.h"
-
+#include <stdexcept>
 std::string packetTypeAsString(PacketType type)
 {
     switch (type) {

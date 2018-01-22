@@ -6,8 +6,8 @@
 #include <thread>
 
 #include <boost/asio/ip/tcp.hpp>
-#include <rapidjson/StringBuffer.h>
-#include <rapidjson/Writer.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
 #include <webrtc/rtc_base/ssladapter.h>
 
 #include "network/NetworkManager.h"
