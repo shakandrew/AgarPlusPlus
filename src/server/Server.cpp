@@ -39,7 +39,6 @@ void Server::run()
 
     while(!shouldQuit) {
         timeManager->advance();
-
         processedPackets = 0;
 
         while(!packetQueue->empty() && processedPackets < MAX_PACKETS_PER_FRAME) {
@@ -50,7 +49,7 @@ void Server::run()
             }
             processedPackets += 1;
         }
-
+        
         networkManager->disconnectTimedOutPlayers();
 
         // TODO: player re-spawn

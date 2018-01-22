@@ -7,6 +7,7 @@
 #include "time/TimeManager.h"
 
 TimeManager::TimeManager()
+    : tick{0}
 {
     #if _WIN32
         LARGE_INTEGER performanceFrequency;
@@ -26,6 +27,8 @@ void TimeManager::advance()
     deltaTime = static_cast<double>(currentTime - lastFrameStartTime);
 
     lastFrameStartTime = currentTime;
+
+    tick += 1;
 }
 
 double TimeManager::getDeltaTime() const
@@ -45,4 +48,14 @@ double TimeManager::getTime() const
         auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime).count();
         return static_cast<double>(ms) / 1000;
     #endif
+}
+
+double TimeManager::getTicks() const
+{
+    return tick;
+}
+
+double TimeManager::getTimeSinceLastTick() const
+{
+    return (getTime() - lastFrameStartTime);
 }

@@ -7,6 +7,8 @@ class TimeManager
 
     double lastFrameStartTime;
 
+    double tick;
+
 #if _WIN32
     LARGE_INTEGER startTime = { 0 };
 
@@ -23,7 +25,11 @@ public:
 
     double getDeltaTime() const;
 
+    double getTicks() const;
+
     double getTime() const;
+
+    double getTimeSinceLastTick() const;
 };
 
 #endif
