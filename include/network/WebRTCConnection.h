@@ -39,6 +39,8 @@ public:
                      std::shared_ptr<WebSocketConnection> signalingConnection,
                      boost::lockfree::spsc_queue<Packet> *packetQueue);
 
+    void close();
+
     void handleSignaling(std::string message);
 
     void run();

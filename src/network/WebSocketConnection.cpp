@@ -16,6 +16,19 @@ WebSocketConnection::WebSocketConnection(ip::tcp::socket tcpSocket)
 
 }
 
+void WebSocketConnection::close()
+{
+    if (!webSocket.is_open()) {
+        std::cout << "Close error: Tried to close already closed webSocket, ignoring..." << std::endl;
+    }
+    boost::system::error_code errorCode;
+    webSocket.close(boost::beast::websocket::close_reason(boost::beast::websocket::close_code::normal), errorCode);
+    if(errorCode) {
+        std::cout << "Close error: " << errorCode.message() << std::endl;
+        return;
+    }
+}
+
 void WebSocketConnection::run(std::function<void(std::string)> onSignalingMessage)
 {
     this->onSignalingMessage = std::move(onSignalingMessage);

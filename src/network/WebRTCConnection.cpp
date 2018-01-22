@@ -22,6 +22,14 @@ WebRTCConnection::WebRTCConnection(WebRTCConfiguration *configuration,
 
 }
 
+void WebRTCConnection::close()
+{
+    dataChannel->UnregisterObserver();
+    dataChannel->Close();
+    peerConnection->Close();
+    signalingConnection->close();
+}
+
 void WebRTCConnection::handleSignaling(std::string message)
 {
     std::stringstream messageStream;

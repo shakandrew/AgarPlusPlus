@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-#include <boost/asio/signal_set.hpp>
 #include <boost/program_options.hpp>
 
 #include <server/Server.h>
@@ -34,6 +33,7 @@ int main(int argc, char const* argv[])
 
     Server server(address, port);
 
+    // TODO: add signal handler
     server.run();
 
     return 0;

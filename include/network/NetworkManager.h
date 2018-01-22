@@ -50,6 +50,8 @@ public:
     NetworkManager(ip::tcp::endpoint const endpoint, NetworkContext *networkContext, TimeManager *timeManager,
                    boost::lockfree::spsc_queue<Packet> *packetQueue);
 
+    ~NetworkManager();
+
     void processPacket(Packet &packet);
 
     void disconnectTimedOutPlayers();

@@ -5,9 +5,10 @@
 #include <iostream>
 #include "SignalingManager.h"
 
-SignalingManager::SignalingManager(boost::asio::io_context &ioContext, const ip::tcp::endpoint endpoint,
-                                   WebRTCConnectionFactory *factory)
-    : acceptor{ioContext},
+SignalingManager::SignalingManager(boost::asio::io_context &ioContext,
+                                   const ip::tcp::endpoint endpoint, WebRTCConnectionFactory *factory)
+    : ioContext{ioContext},
+      acceptor{ioContext},
       socket{ioContext},
       webRTCConnectionFactory{factory}
 {
@@ -31,12 +32,26 @@ SignalingManager::SignalingManager(boost::asio::io_context &ioContext, const ip:
     }
 }
 
+SignalingManager::~SignalingManager()
+{
+    ioContext.dispatch([&]()
+                       {
+                           boost::system::error_code errorCode;
+                           acceptor.close(errorCode);
+                       }
+    );
+
+    webSocketThread->join();
+}
+
 void SignalingManager::run()
 {
     if (!acceptor.is_open()) {
         std::cout << "Failed to open acceptor socket." << std::endl;
         return;
     }
+
+	webSocketThread = std::make_unique<std::thread>([this]() { ioContext.run(); });
 
     accept();
 }

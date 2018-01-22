@@ -32,13 +32,17 @@ NetworkManager::NetworkManager(const ip::tcp::endpoint endpoint, NetworkContext 
       timeManager{timeManager}
 {
     signalingManager->run();
-    std::thread webSocketThread([this]() { ioContext.run(); });
-    webSocketThread.detach();
 
     rtc::InitRandom(rtc::Time32());
     rtc::InitializeSSL();
+    // TODO: handle thread destruction
     std::thread signalingThread{[this]() { webRTCConnectionFactory->run(); }};
     signalingThread.detach();
+}
+
+NetworkManager::~NetworkManager()
+{
+    rtc::CleanupSSL();
 }
 
 void NetworkManager::processPacket(Packet &packet)
@@ -261,8 +265,9 @@ void NetworkManager::unregisterPlayer(PlayerProxy *proxy)
     if (onPlayerDisconnect) {
         onPlayerDisconnect(proxy);
     }
+    auto connection = proxy->getConnection();
     playerIdToPlayerProxy.erase(proxy->getPlayerId());
-    connectionToPlayerProxy.erase(proxy->getConnection());
+    connectionToPlayerProxy.erase(connection);
     auto lastProxy = std::move(playersProxies.back());
     playersProxies.pop_back();
     if (proxy != lastProxy.get()) {
@@ -270,6 +275,7 @@ void NetworkManager::unregisterPlayer(PlayerProxy *proxy)
         lastProxy->setIndexWithinProxiesContainer(static_cast<std::size_t>(proxyIndex));
         playersProxies[proxyIndex] = std::move(lastProxy);
     }
+    connection->close();
 }
 
 void NetworkManager::setOnNewPlayerCallback(std::function<void(PlayerProxy *)> onNewPlayer)

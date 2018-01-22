@@ -24,6 +24,8 @@ public:
 
     explicit WebSocketConnection(ip::tcp::socket tcpSocket);
 
+    void close();
+
     void run(std::function<void(std::string)> onSignalingMessage);
 
     void send(std::string message);
