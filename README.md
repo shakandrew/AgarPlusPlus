@@ -39,8 +39,10 @@ If you have all the libraries installed you can [GO](#server) to the next step.
 
 * **Linux** :
   - Install all libraries: `./scripts/install_all_libs.sh` (TODO)
-  <p>or</p>
-  - Boost 1.66: `./scripts/install_boost.sh`
+
+  or
+
+  - Boost 1.66.0: `./scripts/install_boost.sh`
   - WebRTC M63: `./scripts/install_webrtc.sh`
   - RapidJSON 1.1.0: `./scripts/install_rapidjson.sh` (TODO)
 
